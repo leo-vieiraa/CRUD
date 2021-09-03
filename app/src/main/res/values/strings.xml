@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">CRUD</string>
-    <string name="crud_paciente">Paciente</string>
+    <string name="crud_patient">Patient</string>
     <string name="id">Id</string>
-    <string name="name">Nome</string>
-    <string name="especialidade">Especialidade</string>
-    <string name="delete">Deletar</string>
-    <string name="edit">Editar</string>
-    <string name="new_label">Novo</string>
-    <string name="pacientes">Pacientes</string>
-    <string name="idade">Idade</string>
-    <string name="sexo">Sexo</string>
+    <string name="name">Name</string>
+    <string name="speciality">Speciality</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="new_label">New</string>
+    <string name="patients">Patients</string>
+    <string name="age">age</string>
+    <string name="gender">gender</string>
 </resources>

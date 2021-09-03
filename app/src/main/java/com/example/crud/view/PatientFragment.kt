@@ -3,45 +3,42 @@ package com.example.crud.view
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.crud.R
-import com.example.crud.adapter.PacienteAdapter
-import com.example.crud.databinding.PacienteFragmentBinding
-import com.example.crud.model.Paciente
-import com.example.crud.viewmodel.PacienteViewModel
+import com.example.crud.adapter.PatientAdapter
+import com.example.crud.databinding.PatientFragmentBinding
+import com.example.crud.model.Patient
+import com.example.crud.viewmodel.PatientViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PacienteFragment : Fragment(R.layout.paciente_fragment) {
+class PatientFragment : Fragment(R.layout.patient_fragment) {
 
     companion object {
-        fun newInstance() = PacienteFragment()
+        fun newInstance() = PatientFragment()
     }
 
-    private lateinit var viewModel: PacienteViewModel
-    private lateinit var binding: PacienteFragmentBinding
+    private lateinit var viewModel: PatientViewModel
+    private lateinit var binding: PatientFragmentBinding
     private lateinit var adapterSpinner: ArrayAdapter<String>
 
-    private var selectedPaciente : Paciente? = null
+    private var selectedPatient : Patient? = null
 
-    private val adapter: PacienteAdapter = PacienteAdapter {
+    private val adapter: PatientAdapter = PatientAdapter {
         setValueToFields(it)
     }
 
-    private val observerPaciente = Observer<List<Paciente>> {
+    private val observerPaciente = Observer<List<Patient>> {
         adapter.refresh(it)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = PacienteFragmentBinding.bind(view)
-        viewModel = ViewModelProvider(this).get(PacienteViewModel::class.java)
+        binding = PatientFragmentBinding.bind(view)
+        viewModel = ViewModelProvider(this).get(PatientViewModel::class.java)
 
         setupRecyclerView()
         setupForm()
@@ -51,16 +48,16 @@ class PacienteFragment : Fragment(R.layout.paciente_fragment) {
     }
 
 
-    fun setValueToFields(paciente: Paciente) {
-        binding.inputIdTextInputLayout.editText?.setText(paciente.id.toString())
-        binding.inputNameTextInputLayout.editText?.setText(paciente.nome)
-        binding.inputIdadeTextInputLayout.editText?.setText(paciente.idade.toString())
-        binding.inputSexoTextInputLayout.editText?.setText(paciente.sexo)
+    fun setValueToFields(patient: Patient) {
+        binding.inputIdTextInputLayout.editText?.setText(patient.id.toString())
+        binding.inputNameTextInputLayout.editText?.setText(patient.name)
+        binding.inputIdadeTextInputLayout.editText?.setText(patient.age.toString())
+        binding.inputSexoTextInputLayout.editText?.setText(patient.gender)
 
         binding.inputIdTextInputLayout.visibility = View.VISIBLE
         binding.newButton.visibility = View.GONE
 
-        selectedPaciente = paciente
+        selectedPatient = patient
     }
 
     fun setupRecyclerView() {
@@ -76,10 +73,10 @@ class PacienteFragment : Fragment(R.layout.paciente_fragment) {
 //            val priceStr = binding.inputPriceTextInputLayout.editText?.text ?: ""
 
             if (nameStr.isNotEmpty() && idadeStr.isNotEmpty() && sexoStr.isNotEmpty()) {
-                Paciente(
-                    nome = nameStr.toString(),
-                    idade = idadeStr.toString().toInt(),
-                    sexo = sexoStr.toString().toInt(),
+                Patient(
+                    name = nameStr.toString(),
+                    age = idadeStr.toString().toInt(),
+                    gender = sexoStr.toString().toInt(),
                 ).let {
                     viewModel.insertPaciente(it)
                     clearFields()
@@ -87,7 +84,7 @@ class PacienteFragment : Fragment(R.layout.paciente_fragment) {
             }
         }
 //        binding.deleteButton.setOnClickListener {
-//            selectedPaciente?.paciente?.let {
+//            selectedPatient?.patient?.let {
 //                viewModel.deletePaciente(it)
 //                clearFields()
 //            }
@@ -98,10 +95,10 @@ class PacienteFragment : Fragment(R.layout.paciente_fragment) {
             val sexoStr = binding.inputSexoTextInputLayout.editText?.text ?: ""
 
             if (nameStr.isNotEmpty() && idadeStr.isNotEmpty() && sexoStr.isNotEmpty()) {
-                Paciente(
-                    nome = nameStr.toString(),
-                    idade = idadeStr.toString().toInt(),
-                    sexo = sexoStr.toString().toInt()
+                Patient(
+                    name = nameStr.toString(),
+                    age = idadeStr.toString().toInt(),
+                    gender = sexoStr.toString().toInt()
                 ).let {
                     viewModel.updatePaciente(it)
                     clearFields()
@@ -118,11 +115,11 @@ class PacienteFragment : Fragment(R.layout.paciente_fragment) {
         binding.inputIdTextInputLayout.visibility = View.GONE
         binding.newButton.visibility = View.VISIBLE
 
-        selectedPaciente = null
+        selectedPatient = null
     }
 
     fun startObservers() {
-        viewModel.paciente.observe(viewLifecycleOwner, observerPaciente)
+        viewModel.patient.observe(viewLifecycleOwner, observerPaciente)
     }
 
     fun initialData() {

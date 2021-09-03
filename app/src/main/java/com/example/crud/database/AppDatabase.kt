@@ -2,21 +2,19 @@ package com.example.crud.database
 
 import android.content.Context
 import androidx.room.*
-import androidx.sqlite.db.SupportSQLiteOpenHelper
-import com.example.crud.CRUDApplication
-import com.example.crud.database.dao.PacienteDAO
-import com.example.crud.model.Especialidade
-import com.example.crud.model.Medico
-import com.example.crud.model.Paciente
+import com.example.crud.database.dao.PatientDAO
+import com.example.crud.model.Speciality
+import com.example.crud.model.Doctor
+import com.example.crud.model.Patient
 
 @Database(
-    entities = [Paciente::class, Medico::class, Especialidade::class],
+    entities = [Patient::class, Doctor::class, Speciality::class],
     version = 1
 )
 @TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase(){
 
-    abstract fun pacienteDao() : PacienteDAO
+    abstract fun pacientDao() : PatientDAO
 
     companion object {
 

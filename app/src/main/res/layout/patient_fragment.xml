@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.PacienteFragment">
+    tools:context=".view.PatientFragment">
 
     <TextView
         android:id="@+id/title"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:fontFamily="sans-serif-black"
-        android:text="@string/crud_paciente"
+        android:text="@string/crud_patient"
         android:textColor="@color/black"
         android:textSize="@dimen/title_size"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="@string/idade">
+            android:hint="@string/age">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="@string/sexo">
+            android:hint="@string/gender">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -130,7 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:fontFamily="sans-serif-black"
-        android:text="@string/pacientes"
+        android:text="@string/patients"
         android:textColor="@color/black"
         android:textSize="@dimen/title_size"
         app:layout_constraintEnd_toEndOf="parent"
