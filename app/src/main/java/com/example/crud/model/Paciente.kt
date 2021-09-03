@@ -6,8 +6,14 @@ import androidx.room.PrimaryKey
 @Entity
 data class Paciente(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    var id: Long = 0L,
     val nome: String,
     val idade: Int,
     val sexo: Int
 )
+
+enum class Sexo{
+    MASCULINO,
+    FEMININO,
+    OUTROS
+}

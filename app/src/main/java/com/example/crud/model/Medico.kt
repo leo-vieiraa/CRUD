@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 @Entity
 data class Medico(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    var id: Long = 0,
     val nome: String,
-    val especialidade: Especialidade
 )
