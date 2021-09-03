@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Medico(
+data class Doctor(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
-    val nome: String,
+    val name: String,
 )

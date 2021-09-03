@@ -2,7 +2,7 @@ package com.example.crud
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.crud.view.PacienteFragment
+import com.example.crud.view.PatientFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, PacienteFragment.newInstance())
+            .replace(R.id.container, PatientFragment.newInstance())
             .commitNow()
     }
 }

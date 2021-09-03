@@ -4,15 +4,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Paciente(
+data class Patient(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
-    val nome: String,
-    val idade: Int,
-    val sexo: Int
+    val name: String,
+    val age: Int,
+    val gender: Int
 )
 
-enum class Sexo{
+enum class Gender{
     MASCULINO,
     FEMININO,
     OUTROS
