@@ -13,26 +13,26 @@ class PatientViewModel @Inject constructor(
     private val repository: PatientRepository
 ) : ViewModel() {
 
-    private val _paciente = MutableLiveData<List<Patient>>()
-    val patient: LiveData<List<Patient>> = _paciente
+    private val _patient = MutableLiveData<List<Patient>>()
+    val patient: LiveData<List<Patient>> = _patient
 
-    fun getPaciente() {
-        _paciente.value = repository.getPatient()
+    fun getPatient() {
+        _patient.value = repository.getPatient()
     }
 
-    fun deletePaciente(patient: Patient) {
+    fun deletePatient(patient: Patient) {
         repository.delete(patient)
-        getPaciente()
+        getPatient()
     }
 
-    fun insertPaciente(patient: Patient) {
+    fun insertPatient(patient: Patient) {
         repository.insert(patient)
-        getPaciente()
+        getPatient()
     }
 
-    fun updatePaciente(patient: Patient) {
+    fun updatePatient(patient: Patient) {
         repository.update(patient)
-        getPaciente()
+        getPatient()
     }
 
 }

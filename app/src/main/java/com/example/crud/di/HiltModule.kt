@@ -15,7 +15,7 @@ import dagger.hilt.components.SingletonComponent
 object HiltModule {
 
     @Provides
-    fun provideContextPaciente(@ApplicationContext context: Context): PatientDAO {
+    fun provideContextPatient(@ApplicationContext context: Context): PatientDAO {
         return AppDatabase.getDatabase(context).pacientDao()
     }
 

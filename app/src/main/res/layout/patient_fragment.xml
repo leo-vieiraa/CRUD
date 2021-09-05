@@ -74,14 +74,14 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputSexoTextInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/inputGenderTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="@string/gender">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
