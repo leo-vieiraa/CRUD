@@ -10,7 +10,7 @@ data class Doctor(
     var id: Int = 0,
     @ColumnInfo(name = "doc_name")
     val name: String,
-    val Speciality: Int
+    val speciality: Int
 ) : Serializable
 
 data class DoctorPOJO(
