@@ -18,7 +18,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class PhysicianDaoTest {
+class DoctorDaoTest {
 
     private lateinit var database: AppDatabase
     private lateinit var daoDoctor: DoctorDAO
