@@ -6,15 +6,16 @@ import com.example.crud.database.dao.PatientDAO
 import com.example.crud.model.Speciality
 import com.example.crud.model.Doctor
 import com.example.crud.model.Patient
+import com.example.crud.model.Scheduling
 
 @Database(
-    entities = [Patient::class, Doctor::class, Speciality::class],
+    entities = [Patient::class, Doctor::class, Speciality::class, Scheduling::class],
     version = 1
 )
 @TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase(){
 
-    abstract fun pacientDao() : PatientDAO
+    abstract fun getPatientDao() : PatientDAO
 
     companion object {
 

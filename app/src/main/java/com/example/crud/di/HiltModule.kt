@@ -16,7 +16,7 @@ object HiltModule {
 
     @Provides
     fun provideContextPatient(@ApplicationContext context: Context): PatientDAO {
-        return AppDatabase.getDatabase(context).pacientDao()
+        return AppDatabase.getDatabase(context).getPatientDao()
     }
 
     @Provides
