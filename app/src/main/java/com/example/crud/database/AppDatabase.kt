@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.*
 import com.example.crud.database.dao.DoctorDAO
 import com.example.crud.database.dao.PatientDAO
+import com.example.crud.database.dao.SchedulingDAO
 import com.example.crud.database.dao.SpecialityDAO
 import com.example.crud.model.Speciality
 import com.example.crud.model.Doctor
@@ -20,6 +21,7 @@ abstract class AppDatabase : RoomDatabase(){
     abstract fun getPatientDao() : PatientDAO
     abstract fun getSpecialityDao(): SpecialityDAO
     abstract fun getDoctorDao(): DoctorDAO
+    abstract fun getSchedulingDao(): SchedulingDAO
 
     companion object {
 

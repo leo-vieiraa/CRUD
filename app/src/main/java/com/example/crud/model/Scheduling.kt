@@ -25,6 +25,6 @@ data class SchedulingPOJO(
         parentColumn = "doctorFK",
         entityColumn = "doc_id"
     )
-    val doctor: DoctorPOJO
+    val doctor: Doctor
 )
 
