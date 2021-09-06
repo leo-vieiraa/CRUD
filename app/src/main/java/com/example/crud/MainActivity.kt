@@ -6,6 +6,7 @@ import com.example.crud.databinding.ActivityMainBinding
 import com.example.crud.utils.replaceFragment
 import com.example.crud.view.DoctorFragment
 import com.example.crud.view.PatientFragment
+import com.example.crud.view.SchedulingFragment
 import com.example.crud.view.SpecialityFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.nav_patients -> replaceFragment(PatientFragment.newInstance())
                     R.id.nav_specialities -> replaceFragment(SpecialityFragment.newInstance())
                     R.id.nav_doctors -> replaceFragment(DoctorFragment.newInstance())
+                    R.id.nav_scheduling -> replaceFragment(SchedulingFragment.newInstance())
                 }
                 true
 

@@ -4,9 +4,12 @@ import android.content.Context
 import com.example.crud.database.AppDatabase
 import com.example.crud.database.dao.DoctorDAO
 import com.example.crud.database.dao.PatientDAO
+import com.example.crud.database.dao.SchedulingDAO
 import com.example.crud.database.dao.SpecialityDAO
+import com.example.crud.model.Scheduling
 import com.example.crud.repository.DoctorRepository
 import com.example.crud.repository.PatientRepository
+import com.example.crud.repository.SchedulingRepository
 import com.example.crud.repository.SpecialityRepository
 import dagger.Module
 import dagger.Provides
@@ -41,5 +44,14 @@ object HiltModule {
 
     @Provides
     fun provideRepositorySpeciality(specialityDAO: SpecialityDAO): SpecialityRepository = SpecialityRepository(specialityDAO)
+
+
+    @Provides
+    fun provideContextScheduling(@ApplicationContext context: Context): SchedulingDAO {
+        return AppDatabase.getDatabase(context).getSchedulingDao()
+    }
+
+    @Provides
+    fun provideRepositoryScheduling(schedulingDAO: SchedulingDAO): SchedulingRepository = SchedulingRepository(schedulingDAO)
 
 }

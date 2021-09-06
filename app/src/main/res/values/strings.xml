@@ -19,4 +19,7 @@
     <string name="doctors">Doctors</string>
     <string name="crud_speciality">Speciality</string>
     <string name="specialities">Specialities</string>
+    <string name="crud_scheduling">Scheduling</string>
+    <string name="doctor_name">Doctor Name</string>
+    <string name="schedule">Schedule</string>
 </resources>

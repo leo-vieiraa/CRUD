@@ -19,17 +19,36 @@ class SplashActivity : AppCompatActivity(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_splash)
+        setContentView(binding.root)
 
-        val job = launch {
-            toNextActivity()
+        val names = arrayOf("A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
+
+        val retornoAsync = CoroutineScope(Dispatchers.Main).async {
+            changeNames(names)
         }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val result = retornoAsync.await()
+            if (result) {
+                callNewActivity()
+            }
+        }
+
     }
 
-    private suspend fun toNextActivity() {
+    private suspend fun changeNames(names: Array<String>): Boolean {
+
+        names.forEach {
+            binding.nameTextView.text = it
+            delay(800)
+        }
+
+        return true
+    }
+
+    private suspend fun callNewActivity() {
 
         val intent = Intent(this, MainActivity::class.java)
-        delay(3000)
         withContext(Dispatchers.Main){
             startActivity(intent)
         }

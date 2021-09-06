@@ -34,6 +34,9 @@ interface SchedulingDAO {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun insert(list: List<Scheduling>)
 
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insert(list: Scheduling)
+
     @Delete
     fun delete(scheduling: Scheduling)
 

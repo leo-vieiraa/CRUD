@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_launcher_foreground"
         android:title="Doctors" />
 
+    <item
+        android:id="@+id/nav_scheduling"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Scheduling" />
+
 </menu>
