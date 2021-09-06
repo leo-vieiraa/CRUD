@@ -6,12 +6,15 @@ import com.example.crud.model.Speciality
 @Dao
 interface SpecialityDAO {
 
+    @Transaction
     @Query("Select * from Speciality order by spe_name")
     fun fetch(): List<Speciality>
 
+    @Transaction
     @Query("Select * from Speciality where spe_id = :id")
     fun fetch(id: Int): Speciality
 
+    @Transaction
     @Query("Select * from Speciality where spe_name like '%' || :name || '%'")
     fun fetch(name: String): List<Speciality>
 

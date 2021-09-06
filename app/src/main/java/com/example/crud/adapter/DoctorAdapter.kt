@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.crud.R
+import com.example.crud.databinding.DoctorItemFragmentBinding
 import com.example.crud.model.DoctorPOJO
 
 class DoctorAdapter (
@@ -39,7 +40,13 @@ class DoctorAdapter (
 
 class DoctorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+    private val binding = DoctorItemFragmentBinding.bind(view)
+
     fun bind(doctor: DoctorPOJO) {
+
+        binding.idTextView.text = doctor.doctor?.id.toString()
+        binding.nameTextView.text = doctor.doctor?.name
+        binding.specialityTextView.text = doctor.speciality?.name
 
     }
 

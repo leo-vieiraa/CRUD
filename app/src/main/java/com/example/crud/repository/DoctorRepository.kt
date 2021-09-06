@@ -6,7 +6,7 @@ import com.example.crud.model.DoctorPOJO
 import javax.inject.Inject
 
 class DoctorRepository @Inject constructor(
-    val doctorRepository: DoctorDAO
+    private val doctorRepository: DoctorDAO
 ){
 
     fun getDoctor(): List<DoctorPOJO> {

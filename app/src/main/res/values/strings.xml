@@ -17,4 +17,6 @@
     <string name="patient_gender">Patient Gender</string>
     <string name="crud_doctor">Doctor</string>
     <string name="doctors">Doctors</string>
+    <string name="crud_speciality">Speciality</string>
+    <string name="specialities">Specialities</string>
 </resources>

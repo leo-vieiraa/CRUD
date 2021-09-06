@@ -31,18 +31,18 @@ class PatientFragment : Fragment(R.layout.patient_fragment) {
     private val adapter: PatientAdapter = PatientAdapter {
         setValueToFields(it)
 
-        val bundle = Bundle()
-        bundle.putSerializable("patient", it)
-
-        val fragment = PatientDetailsFragment.newInstance()
-        fragment.arguments = bundle
-
-        requireActivity().supportFragmentManager
-            .beginTransaction()
-            .hide(this)
-            .add(R.id.container, fragment)
-            .addToBackStack("patient")
-            .commit()
+//        val bundle = Bundle()
+//        bundle.putSerializable("patient", it)
+//
+//        val fragment = PatientDetailsFragment.newInstance()
+//        fragment.arguments = bundle
+//
+//        requireActivity().supportFragmentManager
+//            .beginTransaction()
+//            .hide(this)
+//            .add(R.id.container, fragment)
+//            .addToBackStack("patient")
+//            .commit()
 
     }
 

@@ -13,4 +13,10 @@ data class Speciality(
     var id: Int = 0,
     @ColumnInfo(name = "spe_name")
     val name: String
-)
+) {
+
+    override fun toString(): String {
+        return name
+    }
+
+}

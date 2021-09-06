@@ -20,7 +20,7 @@ class SpecialityViewModel @Inject constructor(
         _speciality.value = specialityRepository.fetch()
     }
 
-    fun addSpeciality(speciality: Speciality) {
+    fun insertSpeciality(speciality: Speciality) {
         specialityRepository.insert(speciality)
         getSpeciality()
     }

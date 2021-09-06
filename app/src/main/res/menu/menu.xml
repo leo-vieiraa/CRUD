@@ -4,16 +4,16 @@
     <item
         android:id="@+id/nav_patients"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="Pacientes" />
+        android:title="Patients" />
 
     <item
         android:id="@+id/nav_specialities"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="Especialidades" />
+        android:title="Specialities" />
 
     <item
         android:id="@+id/nav_doctors"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="Médicos" />
+        android:title="Doctors" />
 
 </menu>
