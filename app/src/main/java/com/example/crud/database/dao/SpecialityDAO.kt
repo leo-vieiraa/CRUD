@@ -18,6 +18,9 @@ interface SpecialityDAO {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun insert(list: List<Speciality>)
 
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insert(speciality: Speciality)
+
     @Delete
     fun delete(speciality: Speciality)
 

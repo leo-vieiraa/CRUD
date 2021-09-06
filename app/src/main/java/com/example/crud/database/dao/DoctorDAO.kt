@@ -22,6 +22,9 @@ interface DoctorDAO {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun insert(list: List<Doctor>)
 
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insert(list: Doctor)
+
     @Delete
     fun delete(speciality: Doctor)
 

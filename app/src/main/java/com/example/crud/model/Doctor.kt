@@ -21,4 +21,4 @@ data class DoctorPOJO(
         entityColumn = "spe_id"
     )
     val speciality: Speciality?
-)
+) : Serializable

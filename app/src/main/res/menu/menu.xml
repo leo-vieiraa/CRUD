@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_patients"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Pacientes" />
+
+    <item
+        android:id="@+id/nav_specialities"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Especialidades" />
+
+    <item
+        android:id="@+id/nav_doctors"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Médicos" />
+
+</menu>

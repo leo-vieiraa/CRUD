@@ -53,8 +53,8 @@ class PatientFragment : Fragment(R.layout.patient_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = PatientFragmentBinding.bind(view)
-        binding.pacientesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.pacientesRecyclerView.adapter = adapter
+        binding.patientsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.patientsRecyclerView.adapter = adapter
         binding.inputIdTextInputLayout.visibility = View.GONE
 
 
