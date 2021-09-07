@@ -5,7 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.crud.R
+import com.example.crud.databinding.SchedulingItemFragmentBinding
 import com.example.crud.model.SchedulingPOJO
+import com.example.crud.model.Speciality
 
 class SchedulingAdapter : RecyclerView.Adapter<SchedulingViewHolder>(){
 
@@ -33,7 +35,18 @@ class SchedulingAdapter : RecyclerView.Adapter<SchedulingViewHolder>(){
 
 class SchedulingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+    private val binding = SchedulingItemFragmentBinding.bind(view)
+
     fun bind(schedulingPOJO: SchedulingPOJO) {
+
+        binding.idTextView.text = schedulingPOJO.scheduling.id.toString()
+        binding.ageTextView.text = schedulingPOJO.patient.age.toString()
+        binding.labelPatientNameTextView.text = "Patient Name:"
+        binding.patientNameTextView.text = schedulingPOJO.patient.name
+        binding.genderTextView.text = schedulingPOJO.patient.gender.type
+        binding.labelDoctorNameTextView.text = "Doctor Name:"
+        binding.doctorNameTextView.text = schedulingPOJO.doctor.name
+        binding.specialityTextView.text = schedulingPOJO.doctor.speciality.toString()
 
     }
 

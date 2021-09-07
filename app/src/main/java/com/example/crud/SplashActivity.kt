@@ -40,7 +40,7 @@ class SplashActivity : AppCompatActivity(), CoroutineScope {
 
         names.forEach {
             binding.nameTextView.text = it
-            delay(800)
+            delay(100)
         }
 
         return true

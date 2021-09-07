@@ -18,7 +18,9 @@
         <entry key="app/src/main/res/layout/scheduling_item_fragment.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/speciality_fragment.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/speciality_item_fragment.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/spinner_item_doctor.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/spinner_item_gender.xml" value="0.2953125" />
+        <entry key="app/src/main/res/layout/spinner_item_patient.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.2953125" />
       </map>
     </option>

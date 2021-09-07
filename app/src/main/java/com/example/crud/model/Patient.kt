@@ -16,7 +16,13 @@ data class Patient(
     val age: Int,
     @ColumnInfo(name = "pat_gender")
     val gender: Gender
-) : Serializable
+) : Serializable {
+
+    override fun toString(): String {
+        return "$name - $id"
+    }
+
+}
 
 enum class Gender (val id: Int, val type: String) {
     MALE(0, "Masculino"),

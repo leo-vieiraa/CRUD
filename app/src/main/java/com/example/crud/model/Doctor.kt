@@ -21,4 +21,10 @@ data class DoctorPOJO(
         entityColumn = "spe_id"
     )
     val speciality: Speciality?
-) : Serializable
+) : Serializable {
+
+    override fun toString(): String {
+        return "${doctor?.name} - ${doctor?.id}"
+    }
+
+}
