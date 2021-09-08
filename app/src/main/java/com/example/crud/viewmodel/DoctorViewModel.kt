@@ -17,8 +17,15 @@ class DoctorViewModel @Inject constructor(
     private val _doctor = MutableLiveData<List<DoctorPOJO>>()
     val doctor: LiveData<List<DoctorPOJO>> = _doctor
 
+    private val _singleDoctor = MutableLiveData<DoctorPOJO>()
+    val singleDoctor: LiveData<DoctorPOJO> = _singleDoctor
+
     fun getDoctor() {
         _doctor.value = doctorRepository.getDoctor()
+    }
+
+    fun getDoctorById(id: Int) {
+        _singleDoctor.value = doctorRepository.getDoctorById(id)
     }
 
     fun deleteDoctor(doctor: Doctor) {

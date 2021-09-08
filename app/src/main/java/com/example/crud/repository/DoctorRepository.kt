@@ -13,6 +13,10 @@ class DoctorRepository @Inject constructor(
         return doctorRepository.fetch()
     }
 
+    fun getDoctorById(id: Int): DoctorPOJO {
+        return doctorRepository.fetch(id)
+    }
+
     fun insert(doctor: Doctor) {
         return doctorRepository.insert(doctor)
     }

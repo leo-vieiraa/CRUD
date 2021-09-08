@@ -26,9 +26,9 @@ interface DoctorDAO {
     fun insert(list: Doctor)
 
     @Delete
-    fun delete(speciality: Doctor)
+    fun delete(doctor: Doctor)
 
     @Update
-    fun update(speciality: Doctor)
+    fun update(doctor: Doctor)
 
 }

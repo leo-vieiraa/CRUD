@@ -1,11 +1,13 @@
 package com.example.crud.view
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.view.inspector.StaticInspectionCompanionProvider
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -31,16 +33,20 @@ class DoctorFragment : Fragment(R.layout.doctor_fragment) {
     private lateinit var viewModel: DoctorViewModel
     private lateinit var specialityViewModel: SpecialityViewModel
     private lateinit var binding: DoctorFragmentBinding
+    private lateinit var selectedDoctor: DoctorPOJO
     private var selectedSpeciality: Speciality? = null
-    private val adapter = DoctorAdapter() {
+    private val adapter = DoctorAdapter() { doctor ->
 
-        val bundle = Bundle()
-        bundle.putSerializable("doctor", it)
+        setValueToFields(doctor)
 
     }
 
     private val observerDoctor = Observer<List<DoctorPOJO>> {
         adapter.refresh(it)
+    }
+
+    private val observerSingleDoctor = Observer<DoctorPOJO> { doctor ->
+        selectedDoctor = doctor
     }
 
     private val observerSpecialities = Observer<List<Speciality>> { specialities ->
@@ -52,11 +58,11 @@ class DoctorFragment : Fragment(R.layout.doctor_fragment) {
         binding = DoctorFragmentBinding.bind(view)
         binding.doctorsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.doctorsRecyclerView.adapter = adapter
-//        binding.doctorsRecyclerView.visibility = View.GONE
-
+        binding.inputIdTextInputLayout.visibility = View.GONE
 
         viewModel = ViewModelProvider(this).get(DoctorViewModel::class.java)
         viewModel.doctor.observe(viewLifecycleOwner, observerDoctor)
+        viewModel.singleDoctor.observe(viewLifecycleOwner, observerSingleDoctor)
 
         specialityViewModel = ViewModelProvider(this).get(SpecialityViewModel::class.java)
         specialityViewModel.speciality.observe(viewLifecycleOwner, observerSpecialities)
@@ -80,6 +86,22 @@ class DoctorFragment : Fragment(R.layout.doctor_fragment) {
 //                    clearFields()
                 }
             }
+
+            clearFields()
+
+        }
+        binding.deleteButton.setOnClickListener {
+
+            var idStr = binding.inputIdTextInputLayout.editText?.text.toString()
+
+            viewModel.getDoctorById(idStr.toInt()).let {
+
+                viewModel.deleteDoctor(selectedDoctor.doctor!!)
+
+            }
+
+            clearFields()
+
         }
         binding.editButton.setOnClickListener {
             val nameStr = binding.inputNameTextInputLayout.editText?.text ?: ""
@@ -116,6 +138,29 @@ class DoctorFragment : Fragment(R.layout.doctor_fragment) {
             selectedSpeciality = selected
         }
 
+    }
+
+    fun clearFields() {
+        binding.inputNameTextInputLayout.editText?.setText("")
+        binding.inputIdTextInputLayout.editText?.setText("")
+        binding.inputIdTextInputLayout.visibility = View.GONE
+        binding.newButton.visibility = View.VISIBLE
+
+        val imm =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+
+        selectedSpeciality = null
+    }
+
+    fun setValueToFields(doctorPOJO: DoctorPOJO) {
+        binding.inputIdTextInputLayout.editText?.setText(doctorPOJO.doctor?.id.toString())
+        binding.inputNameTextInputLayout.editText?.setText(doctorPOJO.doctor?.name)
+
+        binding.inputIdTextInputLayout.visibility = View.VISIBLE
+        binding.newButton.visibility = View.GONE
+
+        selectedSpeciality = doctorPOJO.speciality
     }
 
 }
