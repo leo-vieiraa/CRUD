@@ -1,9 +1,11 @@
 package com.example.crud.view
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.lifecycle.Observer
@@ -13,6 +15,7 @@ import com.example.crud.adapter.PatientAdapter
 import com.example.crud.databinding.PatientFragmentBinding
 import com.example.crud.model.Gender
 import com.example.crud.model.Patient
+import com.example.crud.model.Speciality
 import com.example.crud.viewmodel.PatientViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,29 +28,19 @@ class PatientFragment : Fragment(R.layout.patient_fragment) {
 
     private lateinit var viewModel: PatientViewModel
     private lateinit var binding: PatientFragmentBinding
+    private lateinit var selectedPatient: Patient
 
     private var selectedGender: Gender? = null
-
     private val adapter: PatientAdapter = PatientAdapter {
         setValueToFields(it)
 
-//        val bundle = Bundle()
-//        bundle.putSerializable("patient", it)
-//
-//        val fragment = PatientDetailsFragment.newInstance()
-//        fragment.arguments = bundle
-//
-//        requireActivity().supportFragmentManager
-//            .beginTransaction()
-//            .hide(this)
-//            .add(R.id.container, fragment)
-//            .addToBackStack("patient")
-//            .commit()
-
     }
 
-    private val observerPaciente = Observer<List<Patient>> {
+    private val observerPatient = Observer<List<Patient>> {
         adapter.refresh(it)
+    }
+    private val observerSinglePatient = Observer<Patient> { patient ->
+        selectedPatient = patient
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,7 +52,8 @@ class PatientFragment : Fragment(R.layout.patient_fragment) {
 
 
         viewModel = ViewModelProvider(this).get(PatientViewModel::class.java)
-        viewModel.patient.observe(viewLifecycleOwner, observerPaciente)
+        viewModel.patient.observe(viewLifecycleOwner, observerPatient)
+        viewModel.singlePatient.observe(viewLifecycleOwner, observerSinglePatient)
         viewModel.getPatient()
 
         setupForm()
@@ -83,21 +77,19 @@ class PatientFragment : Fragment(R.layout.patient_fragment) {
                 }
             }
         }
-//        binding.deleteButton.setOnClickListener {
-//            val idStr = binding.inputIdTextInputLayout.editText?.text ?: ""
-//            val nameStr = binding.inputNameTextInputLayout.editText?.text ?: ""
-//            val ageStr = binding.inputIdadeTextInputLayout.editText?.text ?: ""
-//
-//            Patient(
-//                id = idStr.toInt(),
-//                name = nameStr.toString(),
-//                age = ageStr.toString().toInt(),
-//                gender = selectedGender!!
-//            ).let {
-//                viewModel.deletePatient(it)
-//                clearFields()
-//            }
-//        }
+        binding.deleteButton.setOnClickListener {
+
+            var idStr = binding.inputIdTextInputLayout.editText?.text.toString()
+
+            viewModel.getPatientById(idStr.toInt()).let {
+
+                viewModel.deletePatient(selectedPatient)
+
+            }
+
+            clearFields()
+
+        }
         binding.editButton.setOnClickListener {
             val nameStr = binding.inputNameTextInputLayout.editText?.text ?: ""
             val ageStr = binding.inputIdadeTextInputLayout.editText?.text ?: ""
@@ -150,6 +142,10 @@ class PatientFragment : Fragment(R.layout.patient_fragment) {
         binding.inputGenderTextInputLayout.editText?.setText("")
         binding.inputIdTextInputLayout.visibility = View.GONE
         binding.newButton.visibility = View.VISIBLE
+
+        val imm =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(requireView().windowToken, 0)
 
         selectedGender = null
     }

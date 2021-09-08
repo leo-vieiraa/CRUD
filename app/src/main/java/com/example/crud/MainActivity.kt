@@ -3,6 +3,7 @@ package com.example.crud
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.crud.databinding.ActivityMainBinding
+import com.example.crud.utils.hideKeyboard
 import com.example.crud.utils.replaceFragment
 import com.example.crud.view.DoctorFragment
 import com.example.crud.view.PatientFragment
