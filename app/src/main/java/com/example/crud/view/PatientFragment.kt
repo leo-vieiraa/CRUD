@@ -8,6 +8,8 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.crud.R
@@ -91,18 +93,21 @@ class PatientFragment : Fragment(R.layout.patient_fragment) {
 
         }
         binding.editButton.setOnClickListener {
+//            setupSpinnerGender()
+            val idStr = binding.inputIdTextInputLayout.editText?.text.toString()
             val nameStr = binding.inputNameTextInputLayout.editText?.text ?: ""
             val ageStr = binding.inputIdadeTextInputLayout.editText?.text ?: ""
 
-            if (nameStr.isNotEmpty() && ageStr.isNotEmpty() && selectedGender != null) {
-                Patient(
-                    name = nameStr.toString(),
-                    age = ageStr.toString().toInt(),
-                    gender = selectedGender!!
-                ).let {
-                    viewModel.updatePatient(it)
-                    clearFields()
-                }
+            if (nameStr.isNotEmpty() && ageStr.isNotEmpty()) {
+                viewModel.updatePatient(
+                    Patient(
+                        id = idStr.toInt(),
+                        name = nameStr.toString(),
+                        age = ageStr.toString().toInt(),
+                        gender = selectedGender!!
+                    )
+                )
+                clearFields()
             }
         }
     }
@@ -159,7 +164,7 @@ class PatientFragment : Fragment(R.layout.patient_fragment) {
         binding.inputIdTextInputLayout.visibility = View.VISIBLE
         binding.newButton.visibility = View.GONE
 
-//        selectedGender = patient
+        selectedGender = patient.gender
     }
 
 }

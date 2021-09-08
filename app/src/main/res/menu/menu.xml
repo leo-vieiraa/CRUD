@@ -3,22 +3,22 @@
 
     <item
         android:id="@+id/nav_patients"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/patients"
         android:title="Patients" />
 
     <item
         android:id="@+id/nav_specialities"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/specialities"
         android:title="Specialities" />
 
     <item
         android:id="@+id/nav_doctors"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/doctors"
         android:title="Doctors" />
 
     <item
         android:id="@+id/nav_scheduling"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/scheduling"
         android:title="Scheduling" />
 
 </menu>

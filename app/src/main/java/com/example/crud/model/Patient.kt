@@ -25,7 +25,7 @@ data class Patient(
 }
 
 enum class Gender (val id: Int, val type: String) {
-    MALE(0, "Masculino"),
-    FEMALE(1, "Feminino"),
-    OTHER(2, "Outro")
+    MALE(0, "Male"),
+    FEMALE(1, "Female"),
+    OTHER(2, "Other")
 }
