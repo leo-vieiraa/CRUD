@@ -18,12 +18,14 @@ class PatientAdapter(
         return LayoutInflater.from(parent.context).inflate(R.layout.patient_item_fragment, parent, false).let {
             PatientViewHolder(it, onTap)
         }
-
     }
 
     override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
         listOf[position].apply {
             holder.bind(this)
+        }
+        holder.itemView.setOnClickListener {
+            onTap(listOf[position])
         }
     }
 

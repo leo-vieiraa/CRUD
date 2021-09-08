@@ -1,19 +1,31 @@
 package com.example.crud.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
 data class Patient(
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0L,
+    @ColumnInfo(name = "pat_id")
+    var id: Int = 0,
+    @ColumnInfo(name = "pat_name")
     val name: String,
+    @ColumnInfo(name = "pat_age")
     val age: Int,
-    val gender: Int
-)
+    @ColumnInfo(name = "pat_gender")
+    val gender: Gender
+) : Serializable {
 
-enum class Gender{
-    MASCULINO,
-    FEMININO,
-    OUTROS
+    override fun toString(): String {
+        return "$name - $id"
+    }
+
+}
+
+enum class Gender (val id: Int, val type: String) {
+    MALE(0, "Male"),
+    FEMALE(1, "Female"),
+    OTHER(2, "Other")
 }

@@ -1,16 +1,23 @@
 package com.example.crud.view
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.crud.R
 import com.example.crud.adapter.PatientAdapter
 import com.example.crud.databinding.PatientFragmentBinding
+import com.example.crud.model.Gender
 import com.example.crud.model.Patient
+import com.example.crud.model.Speciality
 import com.example.crud.viewmodel.PatientViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,108 +30,141 @@ class PatientFragment : Fragment(R.layout.patient_fragment) {
 
     private lateinit var viewModel: PatientViewModel
     private lateinit var binding: PatientFragmentBinding
-    private lateinit var adapterSpinner: ArrayAdapter<String>
+    private lateinit var selectedPatient: Patient
 
-    private var selectedPatient : Patient? = null
-
+    private var selectedGender: Gender? = null
     private val adapter: PatientAdapter = PatientAdapter {
         setValueToFields(it)
+
     }
 
-    private val observerPaciente = Observer<List<Patient>> {
+    private val observerPatient = Observer<List<Patient>> {
         adapter.refresh(it)
+    }
+    private val observerSinglePatient = Observer<Patient> { patient ->
+        selectedPatient = patient
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = PatientFragmentBinding.bind(view)
+        binding.patientsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.patientsRecyclerView.adapter = adapter
+        binding.inputIdTextInputLayout.visibility = View.GONE
+
+
         viewModel = ViewModelProvider(this).get(PatientViewModel::class.java)
+        viewModel.patient.observe(viewLifecycleOwner, observerPatient)
+        viewModel.singlePatient.observe(viewLifecycleOwner, observerSinglePatient)
+        viewModel.getPatient()
 
-        setupRecyclerView()
         setupForm()
-        startObservers()
-        initialData()
+        setupSpinnerGender()
 
-    }
-
-
-    fun setValueToFields(patient: Patient) {
-        binding.inputIdTextInputLayout.editText?.setText(patient.id.toString())
-        binding.inputNameTextInputLayout.editText?.setText(patient.name)
-        binding.inputIdadeTextInputLayout.editText?.setText(patient.age.toString())
-        binding.inputSexoTextInputLayout.editText?.setText(patient.gender)
-
-        binding.inputIdTextInputLayout.visibility = View.VISIBLE
-        binding.newButton.visibility = View.GONE
-
-        selectedPatient = patient
-    }
-
-    fun setupRecyclerView() {
-        binding.pacientesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.pacientesRecyclerView.adapter = adapter
     }
 
     fun setupForm() {
         binding.newButton.setOnClickListener {
             val nameStr = binding.inputNameTextInputLayout.editText?.text ?: ""
-            val idadeStr = binding.inputIdadeTextInputLayout.editText?.text ?: ""
-            val sexoStr = binding.inputSexoTextInputLayout.editText?.text ?: ""
-//            val priceStr = binding.inputPriceTextInputLayout.editText?.text ?: ""
+            val ageStr = binding.inputIdadeTextInputLayout.editText?.text ?: ""
 
-            if (nameStr.isNotEmpty() && idadeStr.isNotEmpty() && sexoStr.isNotEmpty()) {
+            if (nameStr.isNotEmpty() && ageStr.isNotEmpty() && selectedGender != null) {
                 Patient(
                     name = nameStr.toString(),
-                    age = idadeStr.toString().toInt(),
-                    gender = sexoStr.toString().toInt(),
+                    age = ageStr.toString().toInt(),
+                    gender = selectedGender!!,
                 ).let {
-                    viewModel.insertPaciente(it)
+                    viewModel.insertPatient(it)
                     clearFields()
                 }
             }
         }
-//        binding.deleteButton.setOnClickListener {
-//            selectedPatient?.patient?.let {
-//                viewModel.deletePaciente(it)
-//                clearFields()
-//            }
-//        }
-        binding.editButton.setOnClickListener {
-            val nameStr = binding.inputNameTextInputLayout.editText?.text ?: ""
-            val idadeStr = binding.inputIdadeTextInputLayout.editText?.text ?: ""
-            val sexoStr = binding.inputSexoTextInputLayout.editText?.text ?: ""
+        binding.deleteButton.setOnClickListener {
 
-            if (nameStr.isNotEmpty() && idadeStr.isNotEmpty() && sexoStr.isNotEmpty()) {
-                Patient(
-                    name = nameStr.toString(),
-                    age = idadeStr.toString().toInt(),
-                    gender = sexoStr.toString().toInt()
-                ).let {
-                    viewModel.updatePaciente(it)
-                    clearFields()
-                }
+            var idStr = binding.inputIdTextInputLayout.editText?.text.toString()
+
+            viewModel.getPatientById(idStr.toInt()).let {
+
+                viewModel.deletePatient(selectedPatient)
+
+            }
+
+            clearFields()
+
+        }
+        binding.editButton.setOnClickListener {
+//            setupSpinnerGender()
+            val idStr = binding.inputIdTextInputLayout.editText?.text.toString()
+            val nameStr = binding.inputNameTextInputLayout.editText?.text ?: ""
+            val ageStr = binding.inputIdadeTextInputLayout.editText?.text ?: ""
+
+            if (nameStr.isNotEmpty() && ageStr.isNotEmpty()) {
+                viewModel.updatePatient(
+                    Patient(
+                        id = idStr.toInt(),
+                        name = nameStr.toString(),
+                        age = ageStr.toString().toInt(),
+                        gender = selectedGender!!
+                    )
+                )
+                clearFields()
             }
         }
     }
+
+    private fun setupSpinnerGender() {
+        val listOfGender = Gender.values().map { gender ->
+            gender.type
+        }
+
+        val adapterSpinner =
+            ArrayAdapter(
+                requireContext(),
+                R.layout.spinner_item_gender,
+                listOfGender
+            )
+
+        val autoCompleteBrand: AutoCompleteTextView? =
+            binding.inputGenderTextInputLayout.editText as? AutoCompleteTextView
+
+        autoCompleteBrand?.threshold = 1
+
+        autoCompleteBrand?.setAdapter(adapterSpinner)
+
+        autoCompleteBrand?.setOnItemClickListener { parent, view, position, id ->
+            val selected = parent.getItemAtPosition(position) as String
+            selectedGender = Gender.values().find {
+                it.type == selected
+            }
+        }
+    }
+
 
     fun clearFields() {
         binding.inputNameTextInputLayout.editText?.setText("")
         binding.inputIdTextInputLayout.editText?.setText("")
         binding.inputIdadeTextInputLayout.editText?.setText("")
-        binding.inputSexoTextInputLayout.editText?.setText("")
+        binding.inputGenderTextInputLayout.editText?.setText("")
         binding.inputIdTextInputLayout.visibility = View.GONE
         binding.newButton.visibility = View.VISIBLE
 
-        selectedPatient = null
+        val imm =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+
+        selectedGender = null
     }
 
-    fun startObservers() {
-        viewModel.patient.observe(viewLifecycleOwner, observerPaciente)
-    }
+    fun setValueToFields(patient: Patient) {
+        binding.inputIdTextInputLayout.editText?.setText(patient.id.toString())
+        binding.inputNameTextInputLayout.editText?.setText(patient.name)
+        binding.inputIdadeTextInputLayout.editText?.setText(patient.age.toString())
+        binding.inputGenderTextInputLayout.editText?.setText(patient.gender.type)
 
-    fun initialData() {
-        viewModel.getPaciente()
-        binding.inputIdTextInputLayout.visibility = View.GONE
+        binding.inputIdTextInputLayout.visibility = View.VISIBLE
+        binding.newButton.visibility = View.GONE
+
+        selectedGender = patient.gender
     }
 
 }

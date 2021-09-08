@@ -2,8 +2,15 @@ package com.example.crud.di
 
 import android.content.Context
 import com.example.crud.database.AppDatabase
+import com.example.crud.database.dao.DoctorDAO
 import com.example.crud.database.dao.PatientDAO
+import com.example.crud.database.dao.SchedulingDAO
+import com.example.crud.database.dao.SpecialityDAO
+import com.example.crud.model.Scheduling
+import com.example.crud.repository.DoctorRepository
 import com.example.crud.repository.PatientRepository
+import com.example.crud.repository.SchedulingRepository
+import com.example.crud.repository.SpecialityRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,11 +22,36 @@ import dagger.hilt.components.SingletonComponent
 object HiltModule {
 
     @Provides
-    fun provideContextPaciente(@ApplicationContext context: Context): PatientDAO {
-        return AppDatabase.getDatabase(context).pacientDao()
+    fun provideContextPatient(@ApplicationContext context: Context): PatientDAO {
+        return AppDatabase.getDatabase(context).getPatientDao()
     }
 
     @Provides
-    fun provideRepository(patientDAO: PatientDAO): PatientRepository = PatientRepository(patientDAO)
+    fun provideRepositoryPatient(patientDAO: PatientDAO): PatientRepository = PatientRepository(patientDAO)
+
+    @Provides
+    fun provideContextDoctor(@ApplicationContext context: Context): DoctorDAO {
+        return AppDatabase.getDatabase(context).getDoctorDao()
+    }
+
+    @Provides
+    fun provideRepositoryDoctor(doctorDAO: DoctorDAO): DoctorRepository = DoctorRepository(doctorDAO)
+
+    @Provides
+    fun provideContextspeciality(@ApplicationContext context: Context): SpecialityDAO {
+        return AppDatabase.getDatabase(context).getSpecialityDao()
+    }
+
+    @Provides
+    fun provideRepositorySpeciality(specialityDAO: SpecialityDAO): SpecialityRepository = SpecialityRepository(specialityDAO)
+
+
+    @Provides
+    fun provideContextScheduling(@ApplicationContext context: Context): SchedulingDAO {
+        return AppDatabase.getDatabase(context).getSchedulingDao()
+    }
+
+    @Provides
+    fun provideRepositoryScheduling(schedulingDAO: SchedulingDAO): SchedulingRepository = SchedulingRepository(schedulingDAO)
 
 }

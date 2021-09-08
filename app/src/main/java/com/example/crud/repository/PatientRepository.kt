@@ -9,7 +9,11 @@ class PatientRepository @Inject constructor(
 ){
 
     fun getPatient(): List<Patient> {
-        return patientRepository.getAll()
+        return patientRepository.fetch()
+    }
+
+    fun getPatientById(id: Int): Patient {
+        return patientRepository.fetch(id)
     }
 
     fun insert(patient: Patient) {

@@ -1,11 +1,30 @@
 package com.example.crud.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+import java.io.Serializable
 
 @Entity
 data class Doctor(
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0,
+    @ColumnInfo(name = "doc_id")
+    var id: Int = 0,
+    @ColumnInfo(name = "doc_name")
     val name: String,
-)
+    val speciality: Int
+) : Serializable
+
+data class DoctorPOJO(
+    @Embedded
+    val doctor: Doctor?,
+    @Relation(
+        parentColumn = "speciality",
+        entityColumn = "spe_id"
+    )
+    val speciality: Speciality?
+) : Serializable {
+
+    override fun toString(): String {
+        return "${doctor?.name} - ${doctor?.id}"
+    }
+
+}
